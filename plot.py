@@ -7,8 +7,7 @@ t = np.arange(0,10,0.1) # time vector; create Fs samples between 0 and 0.1 sec.
 x = np.arange(-1,1,0.02) 
 y = np.arange(-1,1,0.02) 
 z = np.arange(-1,1,0.02) 
-move = np.arange(0,1,0.01)
-place = np.arange(-10,10,0.2) 
+move = np.arange(0,1,0.01) 
 n = len(y) # length of the signal
 
 serdev = '/dev/ttyACM0'
@@ -22,10 +21,9 @@ for i in range(n):
     y[i] = float(Tp[1])
     z[i] = float(Tp[2])
     move[i] = int(Tp[3])
-    place[i] = float(Tp[4])
     #
     
-fig, ax = plt.subplots(3, 1)
+fig, ax = plt.subplots(2, 1)
 ax[0].plot(t,x, 'r')
 ax[0].plot(t,y, 'y')
 ax[0].plot(t,z, 'b')
@@ -37,9 +35,5 @@ ax[1].stem(t,move,'r')
 ax[1].set_xlim(0, 10)
 ax[1].set_xlabel('Time')
 ax[1].set_ylabel('move > 5cm')
-ax[2].plot(t,place,'b') 
-ax[2].set_xlim(0, 10)
-ax[2].set_xlabel('Time')
-ax[2].set_ylabel('placement')
 plt.show()
 s.close()

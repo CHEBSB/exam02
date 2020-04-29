@@ -99,9 +99,9 @@ void TenSRec() {
 			ty[i] = t[1];
 			tz[i] = t[2];
 			i++;
-			if (t[0] > 0.03 || t[0] < -0.03)
+			if (t[0] > 0.05 || t[0] < -0.05)
             	hpx += 0.5*9.8*t[0];
-			if (t[1] > 0.03 || t[0] < -0.03)
+			if (t[1] > 0.05 || t[1] < -0.05)
             	hpy += 0.5*9.8*t[1];
             hopl[i] = sqrt(hpx*hpx + hpy*hpy);
             if (hopl[i] > 5) Fcm[i] = 1;
@@ -111,7 +111,7 @@ void TenSRec() {
 	}
 	/* Then, send data to pc*/
 	for (int i = 0; i < 100; i++) {
-		pc.printf("%1.3f %1.3f %1.3f %d %1.3f\r\n", tx[i], ty[i], tz[i], Fcm[i], hopl[i]);
+		pc.printf("%1.3f %1.3f %1.3f %d\r\n", tx[i], ty[i], tz[i], Fcm[i]);
 		wait_us(0.05f);
 	}
 	Tout = false;	// reset Tout so it can run again
