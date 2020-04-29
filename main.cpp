@@ -93,9 +93,9 @@ void TenSRec() {
 			ty[i] = t[1];
 			tz[i] = t[2];
 			i++;
-			if (t[0] > 0.05 || t[0] < -0.05)
+			if (t[0] > 0.07 || t[0] < -0.07)
             	hpx += 0.5*9.8*t[0];
-			if (t[1] > 0.05 || t[1] < -0.05)
+			if (t[1] > 0.07 || t[1] < -0.07)
             	hpy += 0.5*9.8*t[1];
             hopl[i] = sqrt(hpx*hpx + hpy*hpy);
             if (hopl[i] > 5) Fcm[i] = 1;
