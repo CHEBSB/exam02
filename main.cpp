@@ -88,12 +88,6 @@ void TenSRec() {
 			acc16 -= UINT14_MAX;
 		t[2] = ((float)acc16) / 4096.0f;
 
-		/*	pc.printf("FXOS8700Q ACC: X=%1.4f(%x%x) Y=%1.4f(%x%x) Z=%1.4f(%x%x)\r\n", \
-				t[0], res[0], res[1], \
-				t[1], res[2], res[3], \
-				t[2], res[4], res[5]\
-			);		*/
-
 		if (i < 100) {
 			tx[i] = t[0];
 			ty[i] = t[1];
