@@ -38,6 +38,7 @@ float tx[100], ty[100], tz[100];
 float hopl[100];
 float hpx = 0;   // initial x-placement
 float hpy = 0;   // initial y-placement
+bool Fcm[100];  // > 5cm
 int i = 0;
 
 InterruptIn sw(SW2);
@@ -102,12 +103,15 @@ void TenSRec() {
 			i++;
             hpx = hpx + 0.5*0.1*0.1*9.8*t[0];
             hpy = hpy + 0.5*0.1*0.1*9.8*t[1];
+            hopl[i] = sqrt(hpx*hpx + hpy*hpy);
+            if (hopl[i] > 5) Fcm[i] = 1;
+            else             Fcm[i] = 0;
 		}
 		wait(0.1f);
 	}
 	/* Then, send data to pc*/
 	for (int i = 0; i < 100; i++) {
-		pc.printf("%1.3f %1.3f %1.3f %d\r\n", tx[i], ty[i], tz[i], tiltArray[i]);
+		pc.printf("%1.3f %1.3f %1.3f %d\r\n", tx[i], ty[i], tz[i], Fcm[i]);
 		wait_us(0.05f);
 	}
 	Tout = false;	// reset Tout so it can run again
