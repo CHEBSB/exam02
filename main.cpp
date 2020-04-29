@@ -36,8 +36,7 @@ void changeMode() { Tout = true; }
 
 float tx[100], ty[100], tz[100];
 float hopl[100];
-float hpx = 0;   // initial x-placement
-float hpy = 0;   // initial y-placement
+
 bool Fcm[100];  // > 5cm
 int i = 0;
 
@@ -64,13 +63,13 @@ int main() {
 	FXOS8700CQ_readRegs(FXOS8700Q_WHOAMI, &who_am_i, 1);
 	led = 0;
 	thre.start(callback(&tiltQ, &EventQueue::dispatch_forever));
-	//	pc.printf("Here is %x\r\n", who_am_i);
 	sw.rise(tiltQ.event(TenSRec));
 
 }
 void TenSRec() {
 	tout.attach(&changeMode, 10.0);	// start 10 sec countdown
-
+	float hpx = 0;   // initial x-placement
+	float hpy = 0;   // initial y-placement
 	while (!Tout) {
         led = !led; // blink
 		FXOS8700CQ_readRegs(FXOS8700Q_OUT_X_MSB, res, 6);
@@ -101,8 +100,8 @@ void TenSRec() {
 			ty[i] = t[1];
 			tz[i] = t[2];
 			i++;
-            hpx = hpx + 0.5*0.1*0.1*9.8*t[0];
-            hpy = hpy + 0.5*0.1*0.1*9.8*t[1];
+            hpx += 0.5*9.8*t[0];
+            hpy += 0.5*9.8*t[1];
             hopl[i] = sqrt(hpx*hpx + hpy*hpy);
             if (hopl[i] > 5) Fcm[i] = 1;
             else             Fcm[i] = 0;
@@ -111,7 +110,7 @@ void TenSRec() {
 	}
 	/* Then, send data to pc*/
 	for (int i = 0; i < 100; i++) {
-		pc.printf("%1.3f %1.3f %1.3f %d\r\n", tx[i], ty[i], tz[i], Fcm[i]);
+		pc.printf("%1.3f %1.3f %1.3f %d %1.3f\r\n", tx[i], ty[i], tz[i], Fcm[i], hopl[i]);
 		wait_us(0.05f);
 	}
 	Tout = false;	// reset Tout so it can run again
