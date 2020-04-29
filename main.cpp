@@ -62,7 +62,7 @@ int main() {
 	FXOS8700CQ_writeRegs(data, 2);
 	// Get the slave address
 	FXOS8700CQ_readRegs(FXOS8700Q_WHOAMI, &who_am_i, 1);
-
+	led = 0;
 	thre.start(callback(&tiltQ, &EventQueue::dispatch_forever));
 	//	pc.printf("Here is %x\r\n", who_am_i);
 	sw.rise(tiltQ.event(TenSRec));
