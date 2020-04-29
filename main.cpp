@@ -61,15 +61,14 @@ int main() {
 	FXOS8700CQ_writeRegs(data, 2);
 	// Get the slave address
 	FXOS8700CQ_readRegs(FXOS8700Q_WHOAMI, &who_am_i, 1);
-	led = 0;
 	thre.start(callback(&tiltQ, &EventQueue::dispatch_forever));
 	sw.rise(tiltQ.event(TenSRec));
 
 }
 void TenSRec() {
 	tout.attach(&changeMode, 10.0);	// start 10 sec countdown
-	float hpx = 0;   // initial x-placement
-	float hpy = 0;   // initial y-placement
+	float hpx = 0;   // initial x-placement = 0
+	float hpy = 0;   // initial y-placement = 0
 	while (!Tout) {
         led = !led; // blink
 		FXOS8700CQ_readRegs(FXOS8700Q_OUT_X_MSB, res, 6);
